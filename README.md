@@ -15,7 +15,7 @@
 
 <br>
 
-[Quickstart](#quickstart) · [Features](#features) · [Architecture](#architecture) · [Usage](#usage) · [Configuration](#configuration)
+[Overview](##Overview) · [Features](#features) · [Architecture](#architecture) · [Usage](#usage) · [Configuration](#configuration)
 
 </div>
 
