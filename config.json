@@ -1,0 +1,60 @@
+{
+  "paths": {
+    "base_dir": ".",
+    "model_file": "models/xgboost_tuned.pkl",
+    "bigram_model": "DataSources/preprocessed/bigram_model.pkl",
+    "trigram_model": "DataSources/preprocessed/trigram_model.pkl",
+    "scaler_file": "DataSources/preprocessed/scaler.pkl",
+    "test_features_csv": "DataSources/preprocessed/test_features.csv",
+    "test_domains_csv": "DataSources/preprocessed/test_domains.csv",
+    "results_dir": "results"
+  },
+  "feature_engineering": {
+    "common_tlds": [
+      "com",
+      "net",
+      "org",
+      "io",
+      "co",
+      "uk",
+      "de",
+      "fr"
+    ],
+    "hex_chars": "0123456789abcdef",
+    "vowels": "aeiou",
+    "consonants": "bcdfghjklmnpqrstvwxyz",
+    "bigram_unk_score": -10.0,
+    "trigram_unk_score": -10.0,
+    "bigram_delim_start": "<",
+    "bigram_delim_end": ">",
+    "ngram_n": 2
+  },
+  "classes": {
+    "labels": {
+      "0": "BENIGN",
+      "1": "DGA",
+      "2": "TUNNEL"
+    },
+    "colors": {
+      "0": "green",
+      "1": "red",
+      "2": "yellow"
+    }
+  },
+  "simulation": {
+    "samples_per_class": 30,
+    "random_state": 42,
+    "delay_seconds": 0.0
+  },
+  "pcap": {
+    "delay_seconds": 0.0
+  },
+  "queue": {
+    "maxsize": 500,
+    "timeout_seconds": 60
+  },
+  "ui": {
+    "domain_truncation_tui": 55,
+    "domain_truncation_plain": 52
+  }
+}
