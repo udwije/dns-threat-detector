@@ -1,3 +1,26 @@
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:1a1a2e,100:16213e&height=120&section=header&text=DNS%20Threat%20Detector&fontSize=42&fontColor=e94560&fontAlignY=55&animation=fadeIn" alt="DNS Threat Detector Banner">
+
+<br>
+
+**Real-time DNS threat classification using lexical machine learning**
+
+<br>
+
+<img src="https://img.shields.io/badge/Python-3.8%2B-3776AB?style=flat-square&logo=python&logoColor=white">
+<img src="https://img.shields.io/badge/CPU%20Only-No%20GPU%20Required-00C853?style=flat-square">
+<img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square">
+<img src="https://img.shields.io/badge/Status-Production%20Ready-brightgreen?style=flat-square">
+
+<br>
+
+[Quickstart](#quickstart) · [Features](#features) · [Architecture](#architecture) · [Usage](#usage) · [Configuration](#configuration)
+
+</div>
+
+---
+
 # 🔒 DNS Threat Detector
 
 > **Passive DNS Threat Detection via Lexical Machine Learning**
@@ -22,10 +45,10 @@ This project implements a production-ready DNS threat detection pipeline that op
 ## 🏗️ Architecture
 
 ```
-┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│  DNS Traffic    │────▶│ Feature Extractor │────▶│  XGBoost Model  │
-│  (Live/PCAP/Sim)│     │ (21 lexical feats) │     │ (3-class classifier)
-└─────────────────┘     └──────────────────┘     └─────────────────┘
+┌─────────────────┐       ┌────────────────────┐     ┌─────────────────────┐
+│  DNS Traffic    │────▶ |  Feature Extractor │────▶│  XGBoost Model      │
+│  (Live/PCAP/Sim)│       │ (21 lexical feats) │     │ (3-class classifier)│
+└─────────────────┘       └────────────────────┘     └─────────────────────┘
                                                             │
                                                             ▼
                                                    ┌─────────────────┐
