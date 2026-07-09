@@ -37,7 +37,6 @@ This project runs a full DNS threat detection pipeline that works only on **lexi
 | 🎲 | **Simulation** — Replay pre-scaled test features from CSV |
 | 🌐 | **Live Capture** — Real-time sniffing on UDP port 53 (via Scapy) |
 | 📁 | **PCAP Replay** — Batch analysis of captured `.pcap` files |
-| 🎯 | **Single Domain** — One-off classification of any domain string |
 
 </div>
 
@@ -139,28 +138,6 @@ Analyze a saved `.pcap` file:
 ```bash
 python dns_threat_detector.py --pcap capture.pcap
 ```
-
-### 4️⃣ Single Domain Classification
-
-Get a quick prediction with a per-class probability breakdown.
-
-```bash
-python dns_threat_detector.py --domain google.com
-```
-
-**Example Output:**
-```
-Domain:     google.com
-Prediction: BENIGN (class 0)
-Confidence: 99.2%
-Latency:    0.847 ms
-
-Per-class probabilities:
-  BENIGN  : 99.23%
-  DGA     :  0.45%
-  TUNNEL  :  0.32%
-```
-
 ---
 
 ## ⚙️ Configuration (`config.json`)
