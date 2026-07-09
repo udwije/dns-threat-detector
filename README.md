@@ -1,84 +1,87 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=rect&color=0:1a1a2e,100:16213e&height=120&section=header&text=DNS%20Threat%20Detector&fontSize=42&fontColor=e94560&fontAlignY=55&animation=fadeIn" alt="DNS Threat Detector Banner">
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,6,12,18&height=200&section=header&text=DNS%20Threat%20Detector&fontSize=50&fontColor=ffffff&fontAlignY=40&desc=Real-time%20DNS%20Threat%20Classification&descAlignY=60&descSize=18&animation=fadeIn" alt="DNS Threat Detector Banner">
 
 <br>
 
-**Real-time DNS threat classification using lexical machine learning**
+### 🔒 Passive DNS Threat Detection via Lexical Machine Learning
 
 <br>
 
-<img src="https://img.shields.io/badge/Python-3.8%2B-3776AB?style=flat-square&logo=python&logoColor=white">
-<img src="https://img.shields.io/badge/CPU%20Only-No%20GPU%20Required-00C853?style=flat-square">
-<img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square">
-<img src="https://img.shields.io/badge/Status-Production%20Ready-brightgreen?style=flat-square">
+<img src="https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white">
+<img src="https://img.shields.io/badge/CPU%20Only-No%20GPU%20Required-00C853?style=for-the-badge">
+<img src="https://img.shields.io/badge/XGBoost-Powered-EB5E28?style=for-the-badge">
+<img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge">
+<img src="https://img.shields.io/badge/Status-Production%20Ready-brightgreen?style=for-the-badge">
 
 <br>
+
+<img src="https://img.shields.io/badge/Modes-Sim%20%7C%20Live%20%7C%20PCAP%20%7C%20Single-9146FF?style=flat-square">
+<img src="https://img.shields.io/badge/Features-21%20Lexical-FF6B6B?style=flat-square">
+<img src="https://img.shields.io/badge/Classes-Benign%20%7C%20DGA%20%7C%20Tunnel-4ECDC4?style=flat-square">
+
+<br><br>
 
 </div>
 
 ---
 
-# 🔒 DNS Threat Detector
-
-> **Passive DNS Threat Detection via Lexical Machine Learning**
-
-A CPU-only prototype for real-time classification of DNS queries into **Benign**, **DGA (Domain Generation Algorithm)**, and **DNS Tunneling** threats using 21 engineered lexical features and an XGBoost classifier.
-
----
-
 ## 📋 Overview
 
-This project implements a production-ready DNS threat detection pipeline that operates entirely on **lexical domain features** — no deep packet inspection or external threat feeds required. It supports four operational modes:
+This project runs a full DNS threat detection pipeline that works only on **lexical domain features**. It does not need deep packet inspection or outside threat feeds. It sorts DNS queries into three groups: **Benign**, **DGA (Domain Generation Algorithm)**, and **DNS Tunneling**. It uses 21 hand built lexical features and an XGBoost classifier.
+
+<div align="center">
 
 | Mode | Description |
-|------|-------------|
-| 🎲 **Simulation** | Replay pre-scaled test features from CSV |
-| 🌐 **Live Capture** | Real-time sniffing on UDP port 53 (via Scapy) |
-| 📁 **PCAP Replay** | Batch analysis of captured `.pcap` files |
-| 🎯 **Single Domain** | One-off classification of any domain string |
+|:---:|:---|
+| 🎲 | **Simulation** — Replay pre-scaled test features from CSV |
+| 🌐 | **Live Capture** — Real-time sniffing on UDP port 53 (via Scapy) |
+| 📁 | **PCAP Replay** — Batch analysis of captured `.pcap` files |
+| 🎯 | **Single Domain** — One-off classification of any domain string |
+
+</div>
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────────┐       ┌────────────────────┐     ┌─────────────────────┐
-│  DNS Traffic    │────▶ |  Feature Extractor │────▶│  XGBoost Model      │
-│  (Live/PCAP/Sim)│       │ (21 lexical feats) │     │ (3-class classifier)│
-└─────────────────┘       └────────────────────┘     └─────────────────────┘
-                                                            │
-                                                            ▼
-                                                   ┌─────────────────┐
-                                                   │  BENIGN / DGA   │
-                                                   │   / TUNNEL      │
-                                                   └─────────────────┘
+┌──────────────────┐       ┌─────────────────────┐       ┌──────────────────────┐
+│   DNS Traffic     │──────▶│   Feature Extractor  │──────▶│   XGBoost Model       │
+│ (Live/PCAP/Sim)   │       │ (21 lexical feats)   │       │ (3-class classifier) │
+└──────────────────┘       └─────────────────────┘       └──────────────────────┘
+                                                                     │
+                                                                     ▼
+                                                          ┌───────────────────┐
+                                                          │  BENIGN / DGA /   │
+                                                          │      TUNNEL       │
+                                                          └───────────────────┘
 ```
 
-### Feature Engineering (21 Features)
+### 🧬 Feature Engineering (21 Features)
 
-The model relies purely on **lexical/statistical features** extracted from domain strings:
+The model only uses **lexical and statistical features** pulled from domain strings.
 
 | Category | Features |
-|----------|----------|
-| **Entropy** | Shannon entropy, max label entropy, label entropy mean/variance |
-| **N-gram Models** | Bigram log-probability, trigram log-probability, n-gram diversity index |
-| **Length** | FQDN length, SLD length, label count, longest label, avg label length, subdomain char length |
-| **Character Composition** | Digit ratio, vowel ratio, consonant ratio, hex ratio, longest consonant run, numeric run length |
-| **Structure** | Common TLD flag, label length variance |
+|:---|:---|
+| 🔢 **Entropy** | Shannon entropy, max label entropy, label entropy mean and variance |
+| 🔤 **N-gram Models** | Bigram log probability, trigram log probability, n-gram diversity index |
+| 📏 **Length** | FQDN length, SLD length, label count, longest label, average label length, subdomain char length |
+| 🧩 **Character Composition** | Digit ratio, vowel ratio, consonant ratio, hex ratio, longest consonant run, numeric run length |
+| 🏗️ **Structure** | Common TLD flag, label length variance |
 
-> **N-gram models** are trained on benign domains to compute log-probabilities — DGA and tunnel domains score significantly lower.
+> 💡 **N-gram models** are trained on benign domains to score log probability. DGA and tunnel domains score much lower.
 
 ---
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### ✅ Prerequisites
 
 - Python 3.8+
-- Trained model artifacts (not included — train your own or request access)
+- Trained model files (not included, train your own or ask for access)
 
-### Installation
+### 📦 Installation
 
 ```bash
 # Clone the repository
@@ -88,58 +91,58 @@ cd dns-threat-detector
 # Install dependencies
 pip install -r requirements.txt
 
-# Optional: Install Scapy for live/PCAP modes
+# Optional: install Scapy for live and PCAP modes
 pip install scapy
 
-# Optional: Install Textual for TUI dashboard
+# Optional: install Textual for the TUI dashboard
 pip install textual
 ```
 
-### Generate Default Config
+### ⚙️ Generate Default Config
 
 ```bash
 python dns_threat_detector.py --init-config
 ```
 
-This creates a `config.json` with default paths and thresholds. Customize as needed.
+This makes a `config.json` file with default paths and thresholds. Change it as you need.
 
 ---
 
 ## 💻 Usage
 
-### 1. Simulation Mode (Recommended for Testing)
+### 1️⃣ Simulation Mode (best for testing)
 
-Uses pre-scaled test features from `test_features.csv` — no feature extraction overhead.
+Uses pre-scaled test features from `test_features.csv`. No feature extraction cost.
 
 ```bash
 python dns_threat_detector.py --sim
 ```
 
-**Output:** Interactive TUI dashboard with real-time classification results.
+**Output:** An interactive TUI dashboard with live results.
 
-### 2. Live Capture Mode
+### 2️⃣ Live Capture Mode
 
-Sniffs DNS queries on UDP port 53 in real-time. Requires **Npcap** (Windows) or **libpcap** (Linux/macOS).
+Watches DNS queries on UDP port 53 in real time. Needs **Npcap** on Windows or **libpcap** on Linux and macOS.
 
 ```bash
-# Linux/macOS (sudo required for raw sockets)
+# Linux/macOS (sudo needed for raw sockets)
 sudo python dns_threat_detector.py --live
 
 # Windows (run as Administrator)
 python dns_threat_detector.py --live
 ```
 
-### 3. PCAP Replay Mode
+### 3️⃣ PCAP Replay Mode
 
-Analyze a previously captured `.pcap` file:
+Analyze a saved `.pcap` file:
 
 ```bash
 python dns_threat_detector.py --pcap capture.pcap
 ```
 
-### 4. Single Domain Classification
+### 4️⃣ Single Domain Classification
 
-Quick one-off prediction with per-class probability breakdown:
+Get a quick prediction with a per-class probability breakdown.
 
 ```bash
 python dns_threat_detector.py --domain google.com
@@ -162,7 +165,7 @@ Per-class probabilities:
 
 ## ⚙️ Configuration (`config.json`)
 
-All paths, thresholds, and constants are externalized to `config.json`:
+All paths, thresholds, and constants live in `config.json`.
 
 ```json
 {
@@ -203,11 +206,15 @@ All paths, thresholds, and constants are externalized to `config.json`:
 
 ## 📊 Threat Classes
 
-| Class | ID | Description | Typical Indicators |
-|-------|-----|-------------|-------------------|
-| **BENIGN** | 0 | Legitimate domains | High n-gram probability, balanced character distribution, common TLDs |
-| **DGA** | 1 | Algorithmically generated domains | High entropy, low n-gram probability, random character patterns |
-| **TUNNEL** | 2 | DNS tunneling (data exfiltration/C2) | Very long labels, high subdomain count, encoded data patterns |
+<div align="center">
+
+| Class | ID | Description | Typical Signs |
+|:---:|:---:|:---|:---|
+| 🟢 **BENIGN** | 0 | Real domains | High n-gram probability, balanced characters, common TLDs |
+| 🔴 **DGA** | 1 | Auto-generated domains | High entropy, low n-gram probability, random characters |
+| 🟡 **TUNNEL** | 2 | DNS tunneling (data theft/C2) | Very long labels, many subdomains, encoded data patterns |
+
+</div>
 
 ---
 
@@ -233,41 +240,40 @@ dns-threat-detector/
 
 ---
 
-## 🧪 Model Training (Separate Notebook)
+## 🧪 Model Training
 
-The classifier is trained in a companion Jupyter notebook (not included in this repo) with the following pipeline:
+The classifier is trained in a companion Jupyter notebook, not included in this repo. The steps are:
 
-1. **Data Collection** — Benign domains (Alexa/Tranco), DGA domains (OSINT feeds), DNS tunnel samples (iodine, dnscat2, etc.)
-2. **Feature Extraction** — 21 lexical features per domain
-3. **N-gram Modeling** — Character-level bigram/trigram models on benign corpus
-4. **Scaling** — StandardScaler fit on training features
-5. **Classification** — XGBoost with hyperparameter tuning (Optuna/grid search)
-6. **Evaluation** — Accuracy, precision, recall, F1 per class + confusion matrix
+1. 📥 **Data Collection** — Benign domains (Alexa/Tranco), DGA domains (OSINT feeds), DNS tunnel samples (iodine, dnscat2, and more)
+2. 🧬 **Feature Extraction** — 21 lexical features per domain
+3. 🔤 **N-gram Modeling** — Character-level bigram and trigram models on the benign set
+4. 📐 **Scaling** — StandardScaler fit on the training features
+5. 🌳 **Classification** — XGBoost with hyperparameter tuning (Optuna/grid search)
+6. 📈 **Evaluation** — Accuracy, precision, recall, F1 per class, plus a confusion matrix
 
-> **Note:** Model artifacts (`*.pkl` files) are **not included** in this repository due to size. Train your own or contact the maintainers.
 
 ---
 
 ## 🖥️ UI Modes
 
-### Rich TUI Dashboard (Textual)
+### 🎨 Rich TUI Dashboard (Textual)
 
-When `textual` is installed, the app launches an interactive terminal UI:
+When `textual` is installed, the app opens an interactive terminal UI with:
 
-- **Live data table** with color-coded threat classes
-- **Real-time statistics bar** (counts per class + average latency)
-- **Auto-scrolling** log view
-- **Graceful fallback** to plain terminal if Textual is unavailable
+- 📊 A live data table with color coded threat classes
+- 📈 A real-time stats bar (counts per class plus average latency)
+- 📜 Auto-scrolling log view
+- 🔁 Graceful fallback to plain terminal if Textual is missing
 
-### Plain Terminal Output
+### 🖨️ Plain Terminal Output
 
-Minimal dependency mode — clean tabular output with CSV logging.
+A minimal dependency mode with clean table output and CSV logging.
 
 ---
 
 ## 📝 Logging
 
-All classifications are automatically logged to:
+All classifications are logged to:
 
 ```
 results/prototype_log_YYYYMMDD_HHMMSS.csv
@@ -285,32 +291,39 @@ results/prototype_log_YYYYMMDD_HHMMSS.csv
 
 ## 🔧 Dependencies
 
-**Core:**
-- `numpy`, `pandas` — Numerical computing
-- `scikit-learn` — Scaling (StandardScaler)
-- `xgboost` — Gradient boosted classifier
-- `joblib` — Model serialization
-- `tldextract` — Domain parsing
+<div align="center">
 
-**Optional:**
-- `scapy` — Live packet capture / PCAP reading
-- `textual` — Rich terminal UI
+**Core**
+
+<img src="https://img.shields.io/badge/numpy-013243?style=flat-square&logo=numpy&logoColor=white">
+<img src="https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white">
+<img src="https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikit-learn&logoColor=white">
+<img src="https://img.shields.io/badge/XGBoost-EB5E28?style=flat-square">
+<img src="https://img.shields.io/badge/joblib-gray?style=flat-square">
+<img src="https://img.shields.io/badge/tldextract-blue?style=flat-square">
+
+**Optional**
+
+<img src="https://img.shields.io/badge/scapy-red?style=flat-square">
+<img src="https://img.shields.io/badge/textual-purple?style=flat-square">
+
+</div>
 
 ---
 
 ## 🛡️ Limitations & Considerations
 
-- **CPU-only** — Designed for edge deployment; no GPU required
-- **Lexical-only** — Does not use DNS response data, TTL, or traffic volume (can be extended)
-- **English-centric** — N-gram models trained on Latin-character domains
-- **Label dependency** — Training data quality directly impacts detection accuracy
-- **Not a replacement** for IDS/SIEM — Use as a complementary detection layer
+- 💻 **CPU-only** — Built for edge deployment, no GPU needed
+- 🔤 **Lexical-only** — Does not use DNS response data, TTL, or traffic volume (can be added later)
+- 🌍 **English-centric** — N-gram models trained on Latin-character domains
+- 🏷️ **Label dependency** — Training data quality has a direct effect on accuracy
+- ⚠️ **Not a replacement** for IDS/SIEM — Use it as an extra layer of detection
 
 ---
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License, see [LICENSE](LICENSE) for details.
 
 ---
 
@@ -318,18 +331,24 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 - Benign domain corpus: [Tranco List](https://tranco-list.eu/)
 - DGA research: [DGArchive](https://dgarchive.caad.fkie.fraunhofer.de/)
-- DNS tunneling tools: iodine, dnscat2, dns2tcp (for synthetic tunnel data generation)
+- DNS tunneling tools: iodine, dnscat2, dns2tcp (used to make synthetic tunnel data)
 
 ---
 
 ## 🤝 Contributing
 
-Contributions welcome! Areas of interest:
-- Additional lexical features (homoglyph detection, punycode analysis)
-- Multi-language n-gram support
-- Integration with Zeek/Suricata
-- Real-time dashboard (web-based)
+Contributions are welcome. Some areas of interest:
+- 🔍 More lexical features (homoglyph detection, punycode analysis)
+- 🌐 Multi-language n-gram support
+- 🔗 Integration with Zeek/Suricata
+- 📊 A real-time web-based dashboard
 
 ---
 
-> **Research Context:** This prototype was developed as part of an evaluation of lexical ML techniques for passive DNS threat detection. For academic use, please cite appropriately.
+<div align="center">
+
+> **Research Context:** This prototype was built as part of a study on lexical ML techniques for passive DNS threat detection. Please cite it if you use it for academic work.
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,6,12,18&height=100&section=footer" alt="footer">
+
+</div>
