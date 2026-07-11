@@ -45,16 +45,29 @@ This project runs a full DNS threat detection pipeline that works only on **lexi
 ## 🏗️ Architecture
 
 ```
-┌──────────────────┐       ┌─────────────────────┐       ┌──────────────────────┐
-│   DNS Traffic     │──────▶│   Feature Extractor  │──────▶│   XGBoost Model       │
-│ (Live/PCAP/Sim)   │       │ (21 lexical feats)   │       │ (3-class classifier) │
-└──────────────────┘       └─────────────────────┘       └──────────────────────┘
-                                                                     │
-                                                                     ▼
-                                                          ┌───────────────────┐
-                                                          │  BENIGN / DGA /   │
-                                                          │      TUNNEL       │
-                                                          └───────────────────┘
+┌─────────────────────┐
+│      DNS Traffic    │
+│  Live / PCAP / Sim  │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Feature Extraction  │
+│ 21 Lexical Features │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│   XGBoost Model     │
+│ 3-Class Classifier  │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│     Prediction      │
+│  BENIGN │ DGA │     │
+│    DNS TUNNEL       │
+└─────────────────────┘
 ```
 
 ### 🧬 Feature Engineering (21 Features)
