@@ -221,7 +221,7 @@ dns-threat-detector/
 
 The classifier is trained in a companion Jupyter notebook, not included in this repo. The steps are:
 
-1. 📥 **Data Collection** — Benign domains (Alexa/Tranco), DGA domains (OSINT feeds), DNS tunnel samples (iodine, dnscat2, and more)
+1. 📥 **Data Collection** — Benign domains (Alexa/Tranco), DGA domains (OSINT feeds), DNS tunnel samples (iodine)
 2. 🧬 **Feature Extraction** — 21 lexical features per domain
 3. 🔤 **N-gram Modeling** — Character-level bigram and trigram models on the benign set
 4. 📐 **Scaling** — StandardScaler fit on the training features
@@ -288,16 +288,6 @@ results/prototype_log_YYYYMMDD_HHMMSS.csv
 
 ---
 
-## 🛡️ Limitations & Considerations
-
-- 💻 **CPU-only** — Built for edge deployment, no GPU needed
-- 🔤 **Lexical-only** — Does not use DNS response data, TTL, or traffic volume (can be added later)
-- 🌍 **English-centric** — N-gram models trained on Latin-character domains
-- 🏷️ **Label dependency** — Training data quality has a direct effect on accuracy
-- ⚠️ **Not a replacement** for IDS/SIEM — Use it as an extra layer of detection
-
----
-
 ## 📄 License
 
 MIT License, see [LICENSE](LICENSE) for details.
@@ -308,7 +298,7 @@ MIT License, see [LICENSE](LICENSE) for details.
 
 - Benign domain corpus: [Tranco List](https://tranco-list.eu/)
 - DGA research: [DGArchive](https://dgarchive.caad.fkie.fraunhofer.de/)
-- DNS tunneling tools: iodine, dnscat2, dns2tcp (used to make synthetic tunnel data)
+- DNS tunneling tools: iodine (used to make tunnel data)
 
 ---
 
